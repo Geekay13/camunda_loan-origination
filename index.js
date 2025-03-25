@@ -12,6 +12,10 @@ app.use(express.json());
 // Connect to MongoDB
 connectDB();
 
+// Import and use routes
+const deploymentRoutes = require("./routes/processRoutes");
+app.use("/api", deploymentRoutes);  // Base path for routes
+
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
