@@ -16,7 +16,8 @@ exports.handleLoanApplication = async (req, res) => {
         last_name,
         address,
         contact,
-        pi
+        pi,
+        loan
       });
 
       await existingUser.save();

@@ -26,10 +26,10 @@ const LoanApplicationSchema = new mongoose.Schema({
     current_employer: { type: String, required: true }
   },
 
-//   loan: { // Loan Information
-//     amount: { type: Number, required: true },
-//     tenure: { type: Number, required: true, min: 24, max: 48 }
-//   },
+  loan: { // Loan Information
+    amount: { type: Number, required: true },
+    tenure: { type: Number, required: true, min: 24, max: 48 }
+  },
 
   createdAt: { type: Date, default: Date.now }
 });
