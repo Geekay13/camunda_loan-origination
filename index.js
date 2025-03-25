@@ -1,20 +1,21 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
-
-// Load environment variables
+const loanRoutes = require("./routes/loanRoutes");
+const deploymentRoutes = require("./routes/processRoutes");
+const app = express();
 dotenv.config();
 
-// Initialize Express app
-const app = express();
+
+
 app.use(express.json());
 
 // Connect to MongoDB
 connectDB();
 
 // Import and use routes
-const deploymentRoutes = require("./routes/processRoutes");
-app.use("/api", deploymentRoutes);  // Base path for routes
+
+app.use("/api", deploymentRoutes,loanRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
