@@ -1,10 +1,12 @@
 const LoanApplication = require("../model/loanApplicationForm");
 const LoanInformation = require("../model/loanInformation");
+const {startProcess} = require("./../services/workers.js");
 
 exports.handleLoanApplication = async (req, res) => {
   try {
     const { first_name, last_name, address, contact, pi, loan } = req.body;
     console.log("Received Data:", req.body);
+    const processVariable = req.body;
 
     // Check if user exists by SSN
     let existingUser = await LoanApplication.findOne({ "pi.ssn": pi.ssn });
@@ -36,6 +38,7 @@ exports.handleLoanApplication = async (req, res) => {
     });
 
     await newLoan.save();
+    await startProcess(processVariable);
 
     res.status(201).json({ message: "Loan application saved successfully!" });
   } catch (error) {
