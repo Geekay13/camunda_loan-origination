@@ -32,6 +32,8 @@ const worker = () => {
   createWorker("declineApplication", declineApplicationHandler)
   createWorker("declineApplication", declineApplicationHandler)
   createWorker("declineApplication", declineApplicationHandler)
+  createWorker("createLoan", createLoanHandler)
+  
 }
 
 const triggerMessages = (messageName, correlationId) => {
@@ -50,58 +52,55 @@ const triggerMessages = (messageName, correlationId) => {
 module.exports = {worker, startProcess, triggerMessages}
 
 const getCreditScoreHandler = (job) => {
-  return job.complete({
-    a: 1
-  });
+  const variables = job.variables;
+  const salary = variables.pi.annual_salary;
+  let creditScore;
+
+  if (salary > 20000) {
+    creditScore = 850;
+  } else if (salary >=  10000 && salary <= 20000) {
+    creditScore = 750;
+  } else if (salary >= 5000 && salary <= 10000) {
+    creditScore = 650;
+  } else if ( salary < 5000){
+    creditScore = 500;
+  }
+  return job.complete({ creditScore });
 }
 
 const createTicketHandler = (job) => {
-  return job.complete({
-    b: 2
-  });
+  let ticketId = Math.floor(Math.random() * 10000000);
+  return job.complete({ ticketId });
+}
+
+const createLoanHandler = (job) => {
+  return job.complete();
 }
 
 const sendOfferMailHandler = (job) => {
-  return job.complete({
-    c: 3
-  });
+  return job.complete();
 }
 
 const provideLoanHandler = (job) => {
-  return job.complete({
-    d: 4
-  });
+  return job.complete();
 }
 
 
 const confirmationMailHandler = (job) => {
-  return job.complete({
-    e: 5
-  });
+  return job.complete();
 }
 const sendRejectMailHandler = (job) => {
-  return job.complete({
-    f: 6
-  });
+  return job.complete();
 }
 const declineApplicationHandler = (job) => {
-  return job.complete({
-    h: 7
-  });
+  return job.complete();
 }
 const loanDeclineHandler = (job) => {
-  return job.complete({
-    i: 8
-  });
+  return job.complete();
 }
 const sendApproveMailHandler = (job) => {
-  return job.complete({
-    j: 9
-  });
+  return job.complete();
 }
-
 const sendReminderHandler = (job) => {
-  return job.complete({
-    k: 10
-  });
+  return job.complete();
 }
