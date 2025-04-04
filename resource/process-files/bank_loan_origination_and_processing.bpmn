@@ -39,16 +39,6 @@
       <bpmn:outgoing>Flow_1myqvj5</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1myqvj5" sourceRef="StartEvent_1" targetRef="Activity_0jg58ef" />
-    <bpmn:serviceTask id="Activity_19tmw4x" name="Validate data and create ticket">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="createTicket" />
-        <zeebe:properties>
-          <zeebe:property name="camundaModeler:exampleOutputJson" value="{&#10;  &#34;ticketId&#34;: 123&#10;}" />
-        </zeebe:properties>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1mmizy1</bpmn:incoming>
-      <bpmn:outgoing>Flow_0qw7cmq</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:serviceTask id="Activity_0jg58ef" name="Get credit score">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="getCreditScore" />
@@ -233,10 +223,6 @@
       <bpmn:errorEventDefinition id="ErrorEventDefinition_10ohf7r" errorRef="Error_1waf4p2" />
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="Flow_0f7795l" sourceRef="Event_0oi6owt" targetRef="Event_06j7g8l" />
-    <bpmn:endEvent id="Event_06j7g8l" name="loan declined - automatically or manually">
-      <bpmn:incoming>Flow_0f7795l</bpmn:incoming>
-      <bpmn:errorEventDefinition id="ErrorEventDefinition_0shbr3g" errorRef="Error_1waf4p2" />
-    </bpmn:endEvent>
     <bpmn:subProcess id="Activity_18spil4" triggeredByEvent="true">
       <bpmn:startEvent id="Event_1cecpcb" name="loan declined">
         <bpmn:outgoing>Flow_05a2cyr</bpmn:outgoing>
@@ -263,6 +249,20 @@
       <bpmn:sequenceFlow id="Flow_02qdyzp" sourceRef="Activity_06izmqr" targetRef="Activity_02ronq9" />
       <bpmn:sequenceFlow id="Flow_05a2cyr" sourceRef="Event_1cecpcb" targetRef="Activity_06izmqr" />
     </bpmn:subProcess>
+    <bpmn:serviceTask id="Activity_19tmw4x" name="Validate data and create ticket">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="createTicket" />
+        <zeebe:properties>
+          <zeebe:property name="camundaModeler:exampleOutputJson" value="{&#10;  &#34;ticketId&#34;: 123&#10;}" />
+        </zeebe:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1mmizy1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qw7cmq</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_06j7g8l" name="loan declined - automatically or manually">
+      <bpmn:incoming>Flow_0f7795l</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0shbr3g" errorRef="Error_1waf4p2" />
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmn:message id="Message_02eoed2" name="customer_accepts_offer">
     <bpmn:extensionElements>
@@ -280,10 +280,6 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="214" y="365" width="73" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0lvzmsp_di" bpmnElement="Activity_19tmw4x">
-        <dc:Bounds x="450" y="300" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1o8jedc" bpmnElement="Activity_0jg58ef">
         <dc:Bounds x="310" y="300" width="100" height="80" />
@@ -338,12 +334,6 @@
           <dc:Bounds x="716" y="365" width="70" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_18q7es1_di" bpmnElement="Event_06j7g8l">
-        <dc:Bounds x="732" y="442" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="707" y="485" width="86" height="40" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0s873x6_di" bpmnElement="Activity_18spil4" isExpanded="true">
         <dc:Bounds x="700" y="540" width="460" height="140" />
       </bpmndi:BPMNShape>
@@ -379,6 +369,16 @@
         <di:waypoint x="768" y="610" />
         <di:waypoint x="810" y="610" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0lvzmsp_di" bpmnElement="Activity_19tmw4x">
+        <dc:Bounds x="450" y="300" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_18q7es1_di" bpmnElement="Event_06j7g8l">
+        <dc:Bounds x="732" y="422" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="708" y="465" width="85" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0oi6owt_di" bpmnElement="Event_0oi6owt">
         <dc:Bounds x="652" y="362" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -442,8 +442,8 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0f7795l_di" bpmnElement="Flow_0f7795l">
         <di:waypoint x="670" y="398" />
-        <di:waypoint x="670" y="460" />
-        <di:waypoint x="732" y="460" />
+        <di:waypoint x="670" y="440" />
+        <di:waypoint x="732" y="440" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_1vxij6s_di" bpmnElement="Participant_10cw3k9" isHorizontal="true">
         <dc:Bounds x="160" y="740" width="300" height="60" />
@@ -561,11 +561,11 @@
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1et00u7" bpmnElement="Activity_0ff69jm">
-        <dc:Bounds x="560" y="90" width="100" height="80" />
+        <dc:Bounds x="520" y="90" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_15df38d" bpmnElement="Activity_07ymt89">
-        <dc:Bounds x="560" y="210" width="100" height="80" />
+        <dc:Bounds x="520" y="210" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_09zhbw6" bpmnElement="Event_0gog19v">
@@ -598,9 +598,9 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_0i4lhi5" bpmnElement="Flow_0l1o42y">
         <di:waypoint x="415" y="130" />
-        <di:waypoint x="560" y="130" />
+        <di:waypoint x="520" y="130" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="417" y="105" width="65" height="27" />
+          <dc:Bounds x="408" y="105" width="65" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_1kkk8g0" bpmnElement="Flow_00qm36p">
@@ -614,9 +614,9 @@
       <bpmndi:BPMNEdge id="BPMNEdge_01kzhhj" bpmnElement="Flow_1dh4tok">
         <di:waypoint x="390" y="155" />
         <di:waypoint x="390" y="250" />
-        <di:waypoint x="560" y="250" />
+        <di:waypoint x="520" y="250" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="417" y="226" width="65" height="27" />
+          <dc:Bounds x="403" y="226" width="65" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_0wnmteg" bpmnElement="Flow_02lqgsk">
@@ -639,11 +639,11 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_0wv4sei" bpmnElement="Flow_1k23v95">
-        <di:waypoint x="660" y="130" />
+        <di:waypoint x="620" y="130" />
         <di:waypoint x="782" y="130" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_13c48di" bpmnElement="Flow_0aox6tt">
-        <di:waypoint x="660" y="250" />
+        <di:waypoint x="620" y="250" />
         <di:waypoint x="782" y="250" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0f5fqcz_di" bpmnElement="Flow_0f5fqcz">
